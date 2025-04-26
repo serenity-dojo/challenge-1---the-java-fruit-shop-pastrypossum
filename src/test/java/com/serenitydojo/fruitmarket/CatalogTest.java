@@ -1,10 +1,7 @@
 package com.serenitydojo.fruitmarket;
 
-import com.serenitydojo.Cart;
-import com.serenitydojo.FruitUnavailableException;
+import com.serenitydojo.*;
 import org.junit.Test;
-import com.serenitydojo.Catalog;
-import com.serenitydojo.CatalogItem;
 
 import java.util.List;
 
@@ -122,15 +119,12 @@ public class CatalogTest {
         );
 
         Cart cart = new Cart();
-
         cart.add(Pear, 3);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(12.00);
-
         cart.add(Apple, 3);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(24.00);
-
         cart.add(Banana, 2);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(36.00);
+
+        Checkout checkout = new Checkout(catalog, cart);
+        assertThat(checkout.getTotalCost()).isEqualTo(36.00);
     }
 
     @Test
@@ -144,15 +138,12 @@ public class CatalogTest {
         );
 
         Cart cart = new Cart();
-
         cart.add(Pear, 1);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(4.00);
-
         cart.add(Pear, 1);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(8.00);
-
         cart.add(Pear, 2);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(16.00);
+
+        Checkout checkout = new Checkout(catalog, cart);
+        assertThat(checkout.getTotalCost()).isEqualTo(16.00);
     }
 
     @Test
@@ -170,13 +161,11 @@ public class CatalogTest {
         cart.add(Apple, 3);
         cart.add(Banana, 3);
 
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(42.00);
-
         cart.remove(Banana, 1);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(36.00);
-
         cart.remove(Pear, 1);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(32.00);
+
+        Checkout checkout = new Checkout(catalog, cart);
+        assertThat(checkout.getTotalCost()).isEqualTo(32.00);
     }
 
     @Test
@@ -190,15 +179,15 @@ public class CatalogTest {
         );
 
         Cart cart = new Cart();
-        cart.add(Pear, 3);
 
+        cart.add(Pear, 3);
         assertThat(cart.getQuantity(Pear)).isEqualTo(3);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(12.00);
 
         cart.remove(Pear, 5);
-
         assertThat(cart.getQuantity(Pear)).isEqualTo(0);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(0.00);
+
+        Checkout checkout = new Checkout(catalog, cart);
+        assertThat(checkout.getTotalCost()).isEqualTo(0.00);
     }
 
     @Test
@@ -212,11 +201,10 @@ public class CatalogTest {
         );
 
         Cart cart = new Cart();
-        cart.add(Pear, 4);
+        cart.add(Pear, 8);
 
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(16.00);
-        cart.add(Pear, 4);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(28.80);
+        Checkout checkout = new Checkout(catalog, cart);
+        assertThat(checkout.getTotalCost()).isEqualTo(28.80);
     }
 
     @Test
@@ -230,10 +218,9 @@ public class CatalogTest {
         );
 
         Cart cart = new Cart();
-        cart.add(Pear, 8);
+        cart.add(Pear, 4);
 
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(28.80);
-        cart.remove(Pear,4);
-        assertThat(cart.getTotalCost(catalog)).isEqualTo(16.00);
+        Checkout checkout = new Checkout(catalog, cart);
+        assertThat(checkout.getTotalCost()).isEqualTo(16.00);
     }
 }

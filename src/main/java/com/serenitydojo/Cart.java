@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class Cart {
 
-    private static final double appliedDiscount = 0.9;
     private Map<Fruit, Integer> shopping = new HashMap<>();
 
     public void add(Fruit fruit, int quantity) {
@@ -29,20 +28,7 @@ public class Cart {
         return shopping.get(fruit);
     }
 
-    public double getTotalCost(Catalog catalog) {
-
-        Map<Fruit,Double> priceList = catalog.getPriceList();
-        double totalCost = 0.0;
-        for(Fruit fruit: shopping.keySet()) {
-
-            Double price = priceList.get(fruit);
-            int quantity = shopping.get(fruit);
-
-            if(quantity >=5)
-                totalCost = totalCost + ((quantity * price) * appliedDiscount);
-            else
-                totalCost = totalCost + (quantity * price);
-        }
-        return totalCost;
+    public Map<Fruit, Integer> getShopping() {
+        return shopping;
     }
 }
